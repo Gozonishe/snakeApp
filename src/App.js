@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import swal from '@sweetalert/with-react';
+import PauseButton from './components/buttons/pauseButton/pauseButton';
+import ScoreButton from './components/buttons/scoreButton/scoreButton';
 import './App.css';
 
 class App extends Component {
@@ -32,7 +34,7 @@ class App extends Component {
           col: 9,
         },
         direction: {
-          x: 1,
+          x: 0,
           y: 0,
         },
         tail: [],
@@ -265,7 +267,7 @@ class App extends Component {
             ))
           }
         </section> 
-        <button className='myButton' onClick={this.onPause}><span>PAUSE</span></button>
+          <button className='myButton' onClick={this.onPause}><span>PAUSE</span></button>
         </div>
         }
         
