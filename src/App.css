@@ -23,13 +23,13 @@
 
 }
 
-.grid {
+/* .grid {
   width: 800px;
   height: 800px;
   display: grid;
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(20, 1fr);
-}
+} */
 
 .square {
   width: 40px;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import swal from '@sweetalert/with-react';
+import grid from './components/grid/grid';
+import {getRandomPositionApple, isApple, isCrossTheApple} from './components/apple/apple';
 import PauseButton from './components/buttons/pauseButton/pauseButton';
 import ScoreButton from './components/buttons/scoreButton/scoreButton';
 import './App.css';
@@ -9,32 +11,29 @@ class App extends Component {
     super();
     this.snakeSpeed = 400   //main speed parameter 
     this.timersId = []      //for Pause
-    const grid = []
+    // const grid = []
 
-    for (let row = 0; row < 20; row++) {
-      const colums = []
-      for (let col = 0; col < 20; col++) {
-        colums.push({
-          row,
-          col
-        });
-      }
-      grid.push(colums);
-    }
+    // for (let row = 0; row < 20; row++) {
+    //   const colums = []
+    //   for (let col = 0; col < 20; col++) {
+    //     colums.push({
+    //       row,
+    //       col
+    //     });
+    //   }
+    //   grid.push(colums);
+    // }
     
     this.state = {
       grid,
-      apple: {
-        row: Math.round(Math.random() * 19),
-        col: Math.round(Math.random() * 19),
-      },
+      apple: getRandomPositionApple(),
       snake: {
         head: {
           row: 9,
           col: 9,
         },
         direction: {
-          x: 0,
+          x: 1,
           y: 0,
         },
         tail: [],
@@ -63,7 +62,7 @@ class App extends Component {
     if (this.state.gameOver) return;
 
     this.setState(({ snake, apple }) => {
-      const crossTheApple = this.crossTheApple()
+      const crossTheApple = isCrossTheApple(this.state.apple, this.state.snake)
       const nextState = {
         snake: {
           ...snake,
@@ -93,12 +92,6 @@ class App extends Component {
     this.startGameWithSpeed(this.snakeSpeed)
   }
 
-  isApple = (square) => {
-    const { apple } = this.state;
-    return apple.row === square.row
-      && apple.col === square.col;
-  }
-
   isHead = (square) => {
     const { snake } = this.state;
     return snake.head.row === square.row
@@ -112,10 +105,7 @@ class App extends Component {
 
   getRandomApple = () => {
     const { snake } = this.state;
-    const newApple = {
-      row: Math.round(Math.random() * 19),
-      col: Math.round(Math.random() * 19),
-    };
+    const newApple = getRandomPositionApple();
     if (this.isTail(newApple) || (
       snake.head.row === newApple.row
       && snake.head.col === newApple.col)) {
@@ -133,12 +123,6 @@ class App extends Component {
       || snake.head.row < 0) {
       return true;
     }
-  }
-
-  crossTheApple = () => {
-    const { apple, snake } = this.state;
-    return apple.row === snake.head.row
-      && apple.col === snake.head.col;
   }
 
   //game keycontrols
@@ -257,7 +241,7 @@ class App extends Component {
                 <div key={`${square.row} ${square.col}`} className={`square 
                   ${
                     this.isHead(square) 
-                    ? 'head' : this.isApple(square)
+                    ? 'head' : isApple(this.state.apple, square)
                     ? 'apple' : this.isTail(square)
                     ? 'tail' : ''
                     }`
