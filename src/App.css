@@ -117,3 +117,40 @@ button a {
   margin-left: 35%;
   margin-right: 35%;
 }
+
+@media (max-height: 840px){
+  .square {
+    width: 30px;
+    height: 30px;
+    outline: 1px solid black;
+    display: inline-block;
+    background-image: url('/grass.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .apple {
+    background-image: url('/apple.png');
+    width: 30px;
+    height: 30px;
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .head {
+    background-image: url('/head.png');
+    width: 30px;
+    height: 30px;
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .tail {
+    background-image: url('/tail.png');
+    width: 30px;
+    height: 30px;
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}

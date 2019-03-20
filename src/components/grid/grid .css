@@ -1,7 +1,17 @@
 .grid {
-    width: 800px;
-    height: 800px;
+  width: 800px;
+  height: 800px;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+}
+
+@media (max-height: 840px){
+  .grid {
+    width: 600px;
+    height: 600px;
     display: grid;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(20, 1fr);
   }
+}
