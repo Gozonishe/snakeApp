@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import swal from '@sweetalert/with-react';
-import grid from './components/grid/grid';
-import {getRandomPositionApple, isApple, isCrossTheApple} from './components/apple/apple';
+import { Grid } from './components/grid/grid';
+import { Apple, getRandomPositionApple, isApple, isCrossTheApple} from './components/apple/apple';
 import PauseButton from './components/buttons/pauseButton/pauseButton';
 import ScoreButton from './components/buttons/scoreButton/scoreButton';
 import './App.css';
@@ -9,26 +9,15 @@ import './App.css';
 class App extends Component {
   constructor() {
     super();
-    this.snakeSpeed = 400   //main speed parameter 
-    this.timersId = []      //for Pause
-    // const grid = []
+    this.snakeSpeed = 400   // main speed parameter 
+    this.timersId = []      // for Pause
+    this.grid = new Grid(20, 20)
+    this.apple = new Apple
 
-    // for (let row = 0; row < 20; row++) {
-    //   const colums = []
-    //   for (let col = 0; col < 20; col++) {
-    //     colums.push({
-    //       row,
-    //       col
-    //     });
-    //   }
-    //   grid.push(colums);
-    // }
-    
     this.state = {
-      grid,
       apple: getRandomPositionApple(),
       snake: {
-        head: {
+        head: { 
           row: 9,
           col: 9,
         },
@@ -225,7 +214,7 @@ class App extends Component {
   }
 
   render() {
-    const {grid, snake, gameOver} = this.state;
+    const {snake, gameOver} = this.state;
     return (
       <div className="App">
         {
@@ -236,7 +225,7 @@ class App extends Component {
           <button className='myButton'><span>SCORE-</span><br></br><a>{snake.tail.length+1}</a></button>
           <section className="grid">
           {
-            grid.map(row => (
+            this.grid.getGrid().map(row => (
               row.map(square => (
                 <div key={`${square.row} ${square.col}`} className={`square 
                   ${

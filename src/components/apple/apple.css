@@ -7,13 +7,3 @@
     background-repeat: no-repeat;
   }
 
-  @media (max-height: 840px){
-    .apple {
-      background-image: url('/apple.png');
-      width: 30px;
-      height: 30px;
-      background-size: 68%;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-  }

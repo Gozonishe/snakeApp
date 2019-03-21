@@ -1,16 +1,35 @@
-import './grid .css'
+import './grid.css'
 
-const grid = []
-
-for (let row = 0; row < 20; row++) {
-  const colums = []
-  for (let col = 0; col < 20; col++) {
-    colums.push({
-      row,
-      col
-    });
+export class Grid {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+    this.grid = []
+    this.create(height, width)
   }
-  grid.push(colums);
-}
 
-export default grid;
+  setGrid(grid) {
+    this.grid = []
+    this.grid = grid
+  }
+
+  getGrid() {
+    return this.grid
+  }
+
+  create(height, width) {
+    const grid = []
+    for (let row = 0; row < height; row++) {
+      const colums = []
+      for (let col = 0; col < width; col++) {
+        colums.push({
+          row,
+          col
+        });
+      }
+      grid.push(colums);
+    }
+    this.setGrid(grid)
+    return grid
+  }
+}
