@@ -2,41 +2,33 @@ import './apple.css'
 
 export class Apple {
   constructor() {
-    this.create()
+    this.x = 0
+    this.y = 0
   }
-
-//   setApple(grid) {
-//     this.grid = []
-//     this.grid = grid
-//   }
 
   getApple() {
-    return this.create()
+    return {
+      x: this.x,
+      y: this.y      
+    }
   }
 
-  create() {
-    return {
-        row: Math.round(Math.random() * 19),
-        col: Math.round(Math.random() * 19),
-      }
+  setApple(posX, posY) {
+    this.x = posX
+    this.y = posY
+  }
+
+  setRandomApple(from, to) {
+    const x = Math.floor(Math.random() * (to - from + 1) + from)
+    const y = Math.floor(Math.random() * (to - from + 1) + from)
+    this.getApple(x, y)
+  }
+
+  isApple (row, col) {
+    return this.x === row && this.y === col;
+  }
+
+  isCrossTheApple(snake) {
+    return this.x === snake.head.row && this.y === snake.head.col;
   }
 }
-
-
-
-
-export function getRandomPositionApple() {
-    return {
-        row: Math.round(Math.random() * 19),
-        col: Math.round(Math.random() * 19),
-      }
-}
-
-export function isApple(apple, square) {
-    return apple.row === square.row && apple.col === square.col;
-}
-
-export function isCrossTheApple(apple, snake) {
-    return apple.row === snake.head.row && apple.col === snake.head.col;
-}
-

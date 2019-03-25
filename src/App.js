@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import swal from '@sweetalert/with-react';
 import { Grid } from './components/grid/grid';
-import { Apple, getRandomPositionApple, isApple, isCrossTheApple} from './components/apple/apple';
+import { Apple } from './components/apple/apple';
+import { Snake } from './components/snake/snake';
 import PauseButton from './components/buttons/pauseButton/pauseButton';
 import ScoreButton from './components/buttons/scoreButton/scoreButton';
 import './App.css';
@@ -12,10 +13,11 @@ class App extends Component {
     this.snakeSpeed = 400   // main speed parameter 
     this.timersId = []      // for Pause
     this.grid = new Grid(20, 20)
-    this.apple = new Apple
+    this.apple = new Apple()
+    this.snake = new Snake()
 
     this.state = {
-      apple: getRandomPositionApple(),
+      apple: this.apple.setRandomApple(0,20),
       snake: {
         head: { 
           row: 9,
@@ -51,7 +53,7 @@ class App extends Component {
     if (this.state.gameOver) return;
 
     this.setState(({ snake, apple }) => {
-      const crossTheApple = isCrossTheApple(this.state.apple, this.state.snake)
+      const crossTheApple = this.apple.isCrossTheApple(this.state.snake)
       const nextState = {
         snake: {
           ...snake,
@@ -61,7 +63,7 @@ class App extends Component {
           },
           tail: [snake.head, ...snake.tail]
         },
-        apple: crossTheApple ? this.getRandomApple() : apple,
+        apple: crossTheApple ? this.setRandomApple(0,20) : apple,
         pause: false,
       };
       if (!crossTheApple) {
@@ -94,7 +96,8 @@ class App extends Component {
 
   getRandomApple = () => {
     const { snake } = this.state;
-    const newApple = getRandomPositionApple();
+    // const newApple = new Apple();
+    const newApple = this.apple.setRandomApple();
     if (this.isTail(newApple) || (
       snake.head.row === newApple.row
       && snake.head.col === newApple.col)) {
@@ -215,6 +218,13 @@ class App extends Component {
 
   render() {
     const {snake, gameOver} = this.state;
+
+
+
+    console.log(this.apple.setRandomApple(0,20)) 
+
+
+
     return (
       <div className="App">
         {
@@ -224,13 +234,14 @@ class App extends Component {
         : <div className='gameTime'>
           <button className='myButton'><span>SCORE-</span><br></br><a>{snake.tail.length+1}</a></button>
           <section className="grid">
+          
           {
             this.grid.getGrid().map(row => (
               row.map(square => (
                 <div key={`${square.row} ${square.col}`} className={`square 
                   ${
-                    this.isHead(square) 
-                    ? 'head' : isApple(this.state.apple, square)
+                    this.isHead(square)
+                    ? 'head' : this.apple.isApple(square)
                     ? 'apple' : this.isTail(square)
                     ? 'tail' : ''
                     }`
