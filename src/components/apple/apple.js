@@ -21,7 +21,7 @@ export class Apple {
   setRandomApple(from, to) {
     const x = Math.floor(Math.random() * (to - from + 1) + from)
     const y = Math.floor(Math.random() * (to - from + 1) + from)
-    this.getApple(x, y)
+    this.setApple(x, y)
   }
 
   isApple (row, col) {

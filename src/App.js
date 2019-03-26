@@ -17,7 +17,7 @@ class App extends Component {
     this.snake = new Snake()
 
     this.state = {
-      apple: this.apple.setRandomApple(0,20),
+      apple: this.apple.setRandomApple(0,19),
       snake: {
         head: { 
           row: 9,
@@ -63,7 +63,7 @@ class App extends Component {
           },
           tail: [snake.head, ...snake.tail]
         },
-        apple: crossTheApple ? this.setRandomApple(0,20) : apple,
+        apple: crossTheApple ? this.apple.setRandomApple(0,19) : apple,
         pause: false,
       };
       if (!crossTheApple) {
@@ -97,11 +97,11 @@ class App extends Component {
   getRandomApple = () => {
     const { snake } = this.state;
     // const newApple = new Apple();
-    const newApple = this.apple.setRandomApple();
+    const newApple = this.apple.setRandomApple(0,19);
     if (this.isTail(newApple) || (
       snake.head.row === newApple.row
       && snake.head.col === newApple.col)) {
-      return this.getRandomApple();
+      return this.apple.getRandomApple();
     } else {
       return newApple;
     }
@@ -221,7 +221,7 @@ class App extends Component {
 
 
 
-    console.log(this.apple.setRandomApple(0,20)) 
+    console.log(this.apple.getApple()) 
 
 
 
@@ -241,7 +241,7 @@ class App extends Component {
                 <div key={`${square.row} ${square.col}`} className={`square 
                   ${
                     this.isHead(square)
-                    ? 'head' : this.apple.isApple(square)
+                    ? 'head' : this.apple.isApple(square.row, square.col)
                     ? 'apple' : this.isTail(square)
                     ? 'tail' : ''
                     }`
