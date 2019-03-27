@@ -2,12 +2,12 @@ Snake Game App
 
 Build with React JS
 
-to run the project: `npm run`
+to run the project: `npm start`
 
 controls:
-    arrows - snake control
-    ESC - exit the game
-    space - pause the game
+    *arrows - snake control 
+    *ESC - exit the game 
+    *space - pause the game 
 
 Have Fun! 
 
