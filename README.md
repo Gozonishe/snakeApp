@@ -10,6 +10,8 @@ controls:
     space - pause the game
 
 Have Fun! 
+
+v 1.1.0
 ___________________________
 TODO LIST:
     *countdown before start

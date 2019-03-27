@@ -15,9 +15,14 @@
     padding:7px 22px;
     text-shadow:0px 1px 0px #5b8a3c;
     margin: 20px;
+    width: 65px; 
+    word-wrap: break-word;
+  }
+ /* .myButton span {
     writing-mode: vertical-rl;
     text-orientation: upright;
-  }
+  } */
+
   .myButton:hover {
     background-color: rgb(240, 116, 116);
   }
@@ -25,7 +30,25 @@
       position:relative;
       top:1px;
   }
-  button span {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
+
+  .restartButton{
+    border-radius:18px;
+    border:2px solid #4b8f29;
+    background-color: #77b55a;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:24px;
+    padding:7px 14px;
+    width: 14vw;
+  }
+
+  @media (max-height: 840px){
+    .myButton {
+      font-size:14px;
+    }
+    .restartButton {
+      width: 26vw;
+      font-size:16px;
+    }
   }

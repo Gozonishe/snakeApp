@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import swal from '@sweetalert/with-react';
-import { Grid } from './components/grid/grid';
-import { Apple } from './components/apple/apple';
-import { Snake } from './components/snake/snake';
-import PauseButton from './components/buttons/pauseButton/pauseButton';
-import ScoreButton from './components/buttons/scoreButton/scoreButton';
+import { Grid } from './components/grid/Grid';
+import { Apple } from './components/apple/Apple';
+import { Snake } from './components/snake/Snake';
+import Button from './components/button/Button';
 import './App.css';
 
 class App extends Component {
@@ -13,21 +12,17 @@ class App extends Component {
     this.snakeSpeed = 400   // main speed parameter 
     this.timersId = []      // for Pause
     this.grid = new Grid(20, 20)
-    this.apple = new Apple()
+    this.apple = new Apple().setRandomApple(0,19)
     this.snake = new Snake()
+      .setHead(9, 9)
+      .setDirection(1, 0)
+      .setTail([])
 
     this.state = {
-      apple: this.apple.setRandomApple(0,19),
       snake: {
-        head: { 
-          row: 9,
-          col: 9,
-        },
-        direction: {
-          x: 1,
-          y: 0,
-        },
-        tail: [],
+        head: this.snake.getHead(),
+        direction: this.snake.getDirection(),
+        tail: this.snake.getTail(),
       },
       pause: false,
       snakeBeforePause: {},
@@ -52,8 +47,10 @@ class App extends Component {
   gamePlay = () => {
     if (this.state.gameOver) return;
 
-    this.setState(({ snake, apple }) => {
-      const crossTheApple = this.apple.isCrossTheApple(this.state.snake)
+    const crossTheApple = this.apple.isCrossTheApple(this.state.snake)
+    crossTheApple ? this.apple.setRandomApple(0,19) : this.apple.getApple()
+
+    this.setState(({ snake }) => {
       const nextState = {
         snake: {
           ...snake,
@@ -63,7 +60,6 @@ class App extends Component {
           },
           tail: [snake.head, ...snake.tail]
         },
-        apple: crossTheApple ? this.apple.setRandomApple(0,19) : apple,
         pause: false,
       };
       if (!crossTheApple) {
@@ -92,19 +88,6 @@ class App extends Component {
   isTail = (square) => {
     const { snake } = this.state;
     return snake.tail.find(inTail => inTail.row === square.row && inTail.col === square.col);
-  }
-
-  getRandomApple = () => {
-    const { snake } = this.state;
-    // const newApple = new Apple();
-    const newApple = this.apple.setRandomApple(0,19);
-    if (this.isTail(newApple) || (
-      snake.head.row === newApple.row
-      && snake.head.col === newApple.col)) {
-      return this.apple.getRandomApple();
-    } else {
-      return newApple;
-    }
   }
 
   isOffEdge = () => {
@@ -218,21 +201,15 @@ class App extends Component {
 
   render() {
     const {snake, gameOver} = this.state;
-
-
-
-    console.log(this.apple.getApple()) 
-
-
-
     return (
       <div className="App">
         {
           gameOver
-        ?<div><h1>Game Over! Your Score is: {snake.tail.length+1}!</h1> 
-          <button className='restartButton' onClick={this.onRestart} >Restart!</button></div>
+        ?<div id='gameOverZone'><h1>Game Over! Your Score is: {snake.tail.length+1}!</h1>
+        <Button onClickCallback={this.onRestart} classNameValue='restartButton' text='RESTART!'/>
+          </div>
         : <div className='gameTime'>
-          <button className='myButton'><span>SCORE-</span><br></br><a>{snake.tail.length+1}</a></button>
+          <Button text={`SCORE - ${snake.tail.length+1}`}/>
           <section className="grid">
           
           {
@@ -251,7 +228,7 @@ class App extends Component {
             ))
           }
         </section> 
-          <button className='myButton' onClick={this.onPause}><span>PAUSE</span></button>
+          <Button id='pauseButton' onClickCallback={this.onPause} text='PAUSE' />
         </div>
         }
         

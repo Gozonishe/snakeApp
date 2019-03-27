@@ -1,5 +1,3 @@
-import './snake.css'
-
 export class Snake {
     constructor(){
       this.head = { 
@@ -15,32 +13,38 @@ export class Snake {
 
     //head attributes
     getHead() {
-      return {
-          row: this.head.row,
-          col: this.head.col 
-      }
+      return this.head
     }
-    setHead(xRow, yCol) {
-      this.head.row = xRow
-      this.head.col = yCol
+    setHead(row, col) {
+      this.head = {
+        row,
+        col,
+      }
+      return this
     }
 
     //direction attributes
     getDirection() {
-      return {
-        x: this.direction.x,
-        y: this.direction.y
-      }
+      return this.direction
     }
-    setDirection(xDir, yDir) {
-      this.direction.x = xDir
-      this.direction.y = yDir
+    setDirection(x, y) {
+      this.direction = {
+        x,
+        y,
+      }
+      return this
     }
 
     //tail attridution
     getTail() {
-      return {
-        tail: []
+      return this.tail
+    }
+    setTail(tail) {
+      if (Array.isArray(tail)) {
+        this.tail = tail
+        return this
+      } else {
+        console.error('the tail is not an array')
       }
     }
 }
